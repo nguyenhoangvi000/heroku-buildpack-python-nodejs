@@ -16,6 +16,11 @@ fi
 if [ ! "$DISABLE_COLLECTSTATIC" ]; then
     set +e
 
+    # Check if collectstatic is configured properly.
+    python $MANAGE_FILE collectstatic --dry-run --noinput &> /dev/null && RUN_COLLECTSTATIC=true
+
+    # Compile assets if collectstatic appears to be kosher.
+    if [ "$RUN_COLLECTSTATIC" ]; then
 
         echo "-----> Collecting static files"
         python $MANAGE_FILE collectstatic --noinput  2>&1 | sed '/^Copying/d;/^$/d;/^ /d' | indent
@@ -24,9 +29,9 @@ if [ ! "$DISABLE_COLLECTSTATIC" ]; then
             echo " !     Error running manage.py collectstatic. More info:"
             echo "       http://devcenter.heroku.com/articles/django-assets"
         }
+    fi
 
     echo
 
 
 fi
-
