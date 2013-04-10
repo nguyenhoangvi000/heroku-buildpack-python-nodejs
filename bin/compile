@@ -198,4 +198,4 @@ if [ $OUT -eq 0 ];then
 fi
 
 # Django collectstatic support.
-source $BIN_DIR/steps/collectstatic $BUILD_DIR
+source $BIN_DIR/steps/collectstatic $ORIG_BUILD_DIR
