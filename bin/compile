@@ -197,5 +197,7 @@ if [ $OUT -eq 0 ];then
    $ROOT_DIR/nodejs/bin/compile $ORIG_BUILD_DIR $CACHE_DIR
 fi
 
+cd $ORIG_BUILD_DIR
+
 # Django collectstatic support.
-source $BIN_DIR/steps/collectstatic $ORIG_BUILD_DIR
+source $BIN_DIR/steps/collectstatic
