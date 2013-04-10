@@ -23,10 +23,10 @@ CACHED_DIRS=".heroku"
 
 pushd `pwd` &> /dev/null
 
-$ROOT_DIR/nodejs/bin/detect $ORIG_BUILD_DIR
+$ROOT_DIR/nodejs/bin/detect $BUILD_DIR
 OUT=$?
 if [ $OUT -eq 0 ];then
-   $ROOT_DIR/nodejs/bin/compile $ORIG_BUILD_DIR $CACHE_DIR
+   $ROOT_DIR/nodejs/bin/compile $BUILD_DIR $CACHE_DIR
 fi
 
 popd
