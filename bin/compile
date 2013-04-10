@@ -8,6 +8,16 @@
 # Fail fast and fail hard.
 set -eo pipefail
 
+pushd `pwd` &> /dev/null
+
+$ROOT_DIR/nodejs/bin/detect $ORIG_BUILD_DIR
+OUT=$?
+if [ $OUT -eq 0 ];then
+   $ROOT_DIR/nodejs/bin/compile $ORIG_BUILD_DIR $CACHE_DIR
+fi
+
+popd
+
 # Prepend proper path for virtualenv hackery. This will be deprecated soon.
 export PATH=:/usr/local/bin:$PATH
 
@@ -190,16 +200,6 @@ source $BIN_DIR/steps/hooks/post_compile
 
 deep-mv $BUILD_DIR $ORIG_BUILD_DIR
 deep-mv $TMP_APP_DIR $APP_DIR
-
-pushd `pwd`
-
-$ROOT_DIR/nodejs/bin/detect $ORIG_BUILD_DIR
-OUT=$?
-if [ $OUT -eq 0 ];then
-   $ROOT_DIR/nodejs/bin/compile $ORIG_BUILD_DIR $CACHE_DIR
-fi
-
-popd
 
 # Django collectstatic support.
 source $BIN_DIR/steps/collectstatic

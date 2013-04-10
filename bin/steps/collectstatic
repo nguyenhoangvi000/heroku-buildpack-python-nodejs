@@ -16,6 +16,8 @@ fi
 if [ ! "$DISABLE_COLLECTSTATIC" ]; then
     set +e
 
+    echo Manage file at $MANAGE_FILE
+
     # Check if collectstatic is configured properly.
     python $MANAGE_FILE collectstatic --dry-run --noinput &> /dev/null && RUN_COLLECTSTATIC=true
 
