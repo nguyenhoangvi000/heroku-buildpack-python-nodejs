@@ -8,15 +8,7 @@
 # Fail fast and fail hard.
 set -eo pipefail
 
-pushd `pwd` &> /dev/null
 
-$ROOT_DIR/nodejs/bin/detect $ORIG_BUILD_DIR
-OUT=$?
-if [ $OUT -eq 0 ];then
-   $ROOT_DIR/nodejs/bin/compile $ORIG_BUILD_DIR $CACHE_DIR
-fi
-
-popd
 
 # Prepend proper path for virtualenv hackery. This will be deprecated soon.
 export PATH=:/usr/local/bin:$PATH
@@ -28,6 +20,16 @@ BUILD_DIR=$1
 CACHE_DIR=$2
 
 CACHED_DIRS=".heroku"
+
+pushd `pwd` &> /dev/null
+
+$ROOT_DIR/nodejs/bin/detect $ORIG_BUILD_DIR
+OUT=$?
+if [ $OUT -eq 0 ];then
+   $ROOT_DIR/nodejs/bin/compile $ORIG_BUILD_DIR $CACHE_DIR
+fi
+
+popd
 
 # Static configurations for virtualenv caches.
 VIRTUALENV_LOC=".heroku/venv"
