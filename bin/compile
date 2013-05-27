@@ -37,7 +37,7 @@ LEGACY_TRIGGER="lib/python2.7"
 PROFILE_PATH="$BUILD_DIR/.profile.d/python.sh"
 
 # Python version. This will be used in the future to specify custom Pythons.
-DEFAULT_PYTHON_VERSION="python-2.7.3"
+DEFAULT_PYTHON_VERSION="python-2.7.4"
 PYTHON_EXE="/app/.heroku/python/bin/python"
 PIP_VERSION="1.3.1"
 DISTRIBUTE_VERSION="0.6.36"
@@ -178,12 +178,6 @@ puts-step "Installing dependencies using Pip ($PIP_VERSION)"
 # ### Finalize
 #
 
-# Store new artifacts in cache.
-for dir in $CACHED_DIRS; do
-  rm -rf $CACHE_DIR/$dir
-  cp -R $dir $CACHE_DIR/
-done
-
 # Set context environment variables.
 set-env PATH '$HOME/.heroku/python/bin:$PATH'
 set-env PYTHONUNBUFFERED true
@@ -200,6 +194,12 @@ source $BIN_DIR/steps/collectstatic
 
 # Experimental post_compile hook.
 source $BIN_DIR/steps/hooks/post_compile
+
+# Store new artifacts in cache.
+for dir in $CACHED_DIRS; do
+  rm -rf $CACHE_DIR/$dir
+  cp -R $dir $CACHE_DIR/
+done
 
 # ### Fin.
 
